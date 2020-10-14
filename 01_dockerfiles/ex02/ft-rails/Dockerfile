@@ -2,7 +2,7 @@ FROM    ruby
 
 LABEL   maintainer aophion@student.21-school.ru
 
-RUN	apt-get update && \
+RUN	apt-get update -y && \
 	apt-get install -y \
 	curl \
 	build-essential \
@@ -12,7 +12,7 @@ RUN	apt-get update && \
 	curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
   	curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
   	echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-  	apt-get update && apt-get install -y nodejs yarn && \
+  	apt-get update -y && apt-get install -y nodejs yarn && \
 	gem update && \
 	gem install rails && \
 	gem instal bundler

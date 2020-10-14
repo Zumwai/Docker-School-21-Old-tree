@@ -8,9 +8,17 @@ RUN	apt-get update && \
 	ca-certificates \
 	postfix
 
+RUN	mkdir /var/run/sshd && \
+	echo 'root:123' | chpasswd && \
+	sed -i 's/^.*?PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+	sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+ENV 	NOTVISIBLE "in users profile"
+RUN	echo "export VISIBLE=now" >> /etc/profile
+
 RUN	wget https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh && \
 	chmod 755 ./script.deb.sh && \
 	bash ./script.deb.sh
+
 
 RUN	apt-get install -y tzdata gitlab-ce
 
