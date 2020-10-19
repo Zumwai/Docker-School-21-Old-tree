@@ -1,1 +1,2 @@
 docker-machine create --driver virtualbox Char
+#docker-machine is deprecated and unmaintained since may. From now on you should use docker desktop
