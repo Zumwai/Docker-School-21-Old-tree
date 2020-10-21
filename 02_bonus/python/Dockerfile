@@ -11,3 +11,5 @@ RUN	apt-get update -y && \
 	git
 
 ENTRYPOINT	/bin/bash
+
+# docker build -t localpy .
