@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./app/:/code
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    volumes:
+     - db_mount:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=42django
+      - POSTGRES_PASSWORD=42pass
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+
+volumes:
+  db_mount:
+
+#docker-compose up --build --remove-orphans
