@@ -1,0 +1,35 @@
+version: '3'
+services:
+    php:
+        build: .
+        links:
+            - mariadb
+        volumes:
+            - ./app/www:/var/www
+    nginx:
+        image: nginx
+        ports:
+            - "8000:80"
+        volumes:
+            - ./app/hosts:/etc/nginx/conf.d
+            - ./app/www:/var/www
+        links:
+            - php
+    mariadb:
+        image: mariadb
+        expose:
+            - "3306"
+        volumes:
+            - ./app/mariadb:/var/lib/mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: 123
+    phpadmin:
+        image: phpmyadmin
+        links:
+            - mariadb
+        ports:
+            - 40000:80
+        environment:
+            PMA_HOST: mariadb
+            MYSQL_USERNAME: root
+            MYSQL_ROOT_PASSWORD: 123
